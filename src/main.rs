@@ -1,4 +1,7 @@
-#![cfg_attr(all(not(debug_assertions), target_family = "windows"), windows_subsystem = "windows")]
+#![cfg_attr(
+    all(not(debug_assertions), target_family = "windows"),
+    windows_subsystem = "windows"
+)]
 
 use bevy::app::App;
 use bevy::asset::AssetServer;
