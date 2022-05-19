@@ -3,12 +3,11 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - "v[0-9]+.[0-9]+.[0-9]+*"
 
 env:
   # update with the name of the main binary
-  binary: bevy_github_ci_template
-
+  binary: stunning_enigma
 
 jobs:
 
@@ -35,8 +34,14 @@ jobs:
 
       - name: Prepare package
         run: |
-          wasm-bindgen --no-typescript --out-name bevy_game --out-dir wasm --target web target/wasm32-unknown-unknown/release/${{ env.binary }}.wasm
+          wasm-bindgen --no-typescript --out-name ${{ env.binary }} --out-dir wasm --target web target/wasm32-unknown-unknown/release/${{ env.binary }}.wasm
           cp -r assets wasm/
+
+      - name: optimize Wasm
+        uses: NiklasEi/wasm-opt-action@v2
+        with:
+          file: dist/*.wasm
+
       - name: Package as a zip
         uses: vimtor/action-zip@v1
         with:
@@ -51,6 +56,12 @@ jobs:
           asset_name: ${{ env.binary }}-wasm-${{ steps.get_version.outputs.tag }}.zip
           tag: ${{ github.ref }}
           overwrite: true
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: wasm
 
   # Build for Linux
   release-linux:
@@ -133,7 +144,7 @@ jobs:
 
   # Build for macOS
   release-macos:
-    runs-on: macOS-latest
+    runs-on: macos-latest
 
     steps:
       - uses: little-core-labs/get-git-tag@v3.0.1
