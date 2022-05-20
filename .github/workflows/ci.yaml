@@ -37,11 +37,11 @@ jobs:
           override: true
       - name: Install Dependencies
         if: runner.os == 'linux'
-        run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
+        run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libwayland-dev libxkbcommon-dev
       - name: Run cargo test
         uses: actions-rs/cargo@v1
         with:
-          command: test
+          command: test --all-targets --all-features
 
   clippy_check:
     name: Clippy
@@ -67,12 +67,12 @@ jobs:
           components: clippy
           override: true
       - name: Install Dependencies
-        run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev
+        run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libwayland-dev libxkbcommon-dev
       - name: Run clippy
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: -- -D warnings
+          args: --all-targets --all-features -- -D warnings
 
   format:
     name: Format

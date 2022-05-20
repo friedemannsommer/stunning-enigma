@@ -4,6 +4,47 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 
+[features]
+default = [
+    "mimalloc/secure",
+    "bevy/animation",
+    "bevy/bevy_gilrs",
+    "bevy/bevy_winit",
+    "bevy/filesystem_watcher",
+    "bevy/bevy_render",
+    "bevy/bevy_core_pipeline",
+    "bevy/bevy_pbr",
+    "bevy/bevy_gltf",
+    "bevy/bevy_text",
+    "bevy/bevy_ui",
+    "bevy/subpixel_glyph_atlas",
+    "bevy/serialize",
+    "bevy/ktx2",
+    "bevy/dds",
+    "bevy/png",
+    "bevy/hdr",
+    "bevy/basis-universal",
+    "bevy/zstd",
+    "bevy_kira_audio/ogg",
+    "bevy_kira_audio/serde"
+]
+
+linux = [
+    "bevy/x11",
+    "bevy/wayland",
+]
+
+development = [
+    "bevy/dynamic"
+]
+
+trace = [
+    "bevy/trace",
+    "bevy/trace_tracy",
+    "bevy/trace_chrome",
+    "bevy/wgpu_trace",
+]
+
 [dependencies]
 bevy_asset_loader = "0.10.0"
 bevy_config_cam = "0.3.0"
@@ -21,68 +62,18 @@ console_error_panic_hook = "0.1.7"
 [dependencies.mimalloc]
 version = "0.1.29"
 default-features = false
-features = ["secure"]
 
 [dependencies.bevy]
 version = "0.7"
 default-features = false
-features = [
-    ## default features
-    "animation", # Animation support
-    "bevy_gilrs", # Gamepad input support
-    # "bevy_audio", # Builtin audio
-    "bevy_winit", # Window management
-    "filesystem_watcher", # Asset hot-reloading
-    # "render", # Graphics Rendering
-
-    ## "render" features:
-    "bevy_render", # Rendering framework core
-    "bevy_core_pipeline", # Higher-level rendering abstractions
-    # "bevy_sprite", # 2D (sprites) rendering
-    "bevy_pbr", # 3D (physically-based) rendering
-    "bevy_gltf", # GLTF 3D assets format support
-    "bevy_text", # Text/font rendering
-    "bevy_ui", # UI toolkit
-
-    ## functionality:
-    "x11", # Linux: Support X11 windowing system
-    "wayland", # Linux: Support Wayland windowing system
-    "subpixel_glyph_atlas", # Subpixel antialiasing for text/fonts
-    "serialize", # Support for `serde` Serialize/Deserialize
-
-    ## file formats:
-    "ktx2",
-    "dds",
-    "png",
-    "hdr",
-    "basis-universal",
-    "zstd",
-    # "vorbis",
-    # "jpeg",
-    # "bmp",
-    # "tga",
-    # "flac",
-    # "mp3",
-    # "wav",
-
-    ## development / debug features:
-    # "dynamic", # Dynamic linking for faster compile-times
-    # "trace", # Enable tracing for performance measurement
-    # "trace_tracy", # Tracing using `tracy`
-    # "trace_chrome", # Tracing using the Chrome format
-    # "wgpu_trace", # WGPU/rendering tracing
-]
 
 [dependencies.bevy_kira_audio]
 version = "0.9.0"
 default-features = false
-features = ["ogg"]
 
-# Enable only a small amount of optimization in debug mode
 [profile.dev]
 opt-level = 1
 
-# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
 opt-level = 3
 
