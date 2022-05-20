@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: little-core-labs/get-git-tag@v3.0.1
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
       - uses: actions-rs/toolchain@v1
@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: little-core-labs/get-git-tag@v3.0.1
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
       - uses: actions-rs/toolchain@v1
@@ -115,7 +115,7 @@ jobs:
     steps:
       - uses: little-core-labs/get-git-tag@v3.0.1
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -152,7 +152,7 @@ jobs:
     steps:
       - uses: little-core-labs/get-git-tag@v3.0.1
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
