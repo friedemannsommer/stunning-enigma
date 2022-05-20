@@ -10,8 +10,6 @@ env:
   binary: stunning_enigma
 
 jobs:
-
-  # Build for wasm
   release-wasm:
     runs-on: ubuntu-latest
 
@@ -19,11 +17,13 @@ jobs:
       - uses: little-core-labs/get-git-tag@v3.0.1
         id: get_version
       - uses: actions/checkout@v2
+      - uses: rui314/setup-mold@v1
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           target: wasm32-unknown-unknown
           override: true
+
       - name: install wasm-bindgen-cli
         run: |
           cargo install wasm-bindgen-cli
@@ -63,7 +63,6 @@ jobs:
           branch: gh-pages
           folder: wasm
 
-  # Build for Linux
   release-linux:
     runs-on: ubuntu-latest
 
@@ -71,6 +70,7 @@ jobs:
       - uses: little-core-labs/get-git-tag@v3.0.1
         id: get_version
       - uses: actions/checkout@v2
+      - uses: rui314/setup-mold@v1
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -104,7 +104,6 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-  # Build for Windows
   release-windows:
     runs-on: windows-latest
 
@@ -142,7 +141,6 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-  # Build for macOS
   release-macos:
     runs-on: macos-latest
 

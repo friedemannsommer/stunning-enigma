@@ -9,8 +9,6 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-
-  # Run cargo test
   test:
     name: Test Suite
     strategy:
@@ -28,6 +26,8 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.toml') }}
+      - uses: rui314/setup-mold@v1
+        if: runner.os == 'linux'
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -41,7 +41,6 @@ jobs:
         with:
           command: test
 
-  # Run cargo clippy -- -D warnings
   clippy_check:
     name: Clippy
     runs-on: ubuntu-latest
@@ -56,6 +55,7 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}
+      - uses: rui314/setup-mold@v1
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -71,7 +71,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: -- -D warnings
 
-  # Run cargo fmt --all -- --check
   format:
     name: Format
     runs-on: ubuntu-latest
