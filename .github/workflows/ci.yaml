@@ -3,7 +3,7 @@ name: CI
 on:
   push:
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -27,6 +27,8 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.toml') }}
       - uses: rui314/setup-mold@v1
+        if: runner.os == 'linux'
+      - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
         if: runner.os == 'linux'
       - uses: actions-rs/toolchain@v1
         with:
@@ -56,6 +58,7 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}
       - uses: rui314/setup-mold@v1
+      - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
