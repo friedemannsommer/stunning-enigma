@@ -17,15 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.toml') }}
+      - uses: Swatinem/rust-cache@v1
       - uses: rui314/setup-mold@v1
         if: runner.os == 'linux'
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
@@ -49,15 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}
+      - uses: Swatinem/rust-cache@v1
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
       - name: Install stable toolchain
