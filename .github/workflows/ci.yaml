@@ -33,11 +33,18 @@ jobs:
       - name: Install Dependencies
         if: runner.os == 'linux'
         run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libwayland-dev libxkbcommon-dev
-      - name: Run cargo test
+      - name: Run cargo test (linux)
         uses: actions-rs/cargo@v1
+        if: runner.os == 'linux'
         with:
           command: test
-          args: --all-targets --all-features
+          args: --all-targets --features linux,native
+      - name: Run cargo test (linux)
+        uses: actions-rs/cargo@v1
+        if: runner.os != 'linux'
+        with:
+          command: test
+          args: --all-targets --features native
 
   clippy_check:
     name: Clippy
@@ -60,7 +67,7 @@ jobs:
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-targets --all-features -- -D warnings
+          args: --all-targets --features linux,native -- -D warnings
 
   format:
     name: Format
