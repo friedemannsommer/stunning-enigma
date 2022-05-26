@@ -77,6 +77,7 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
         });
 }
 
+#[allow(clippy::type_complexity)]
 pub fn button_interaction_visual(
     mut query: Query<(&Interaction, &mut UiColor), (Changed<Interaction>, With<Button>)>,
 ) {
@@ -95,6 +96,7 @@ pub fn button_interaction_visual(
     }
 }
 
+#[allow(clippy::type_complexity)]
 pub fn on_button_interaction<B: Component>(
     query: Query<&Interaction, (Changed<Interaction>, With<Button>, With<B>)>,
 ) -> bool {
