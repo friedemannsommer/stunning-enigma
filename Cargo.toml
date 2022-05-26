@@ -7,30 +7,29 @@ license = "MIT OR Apache-2.0"
 [features]
 default = [
     "bevy/animation",
-    "bevy/bevy_gilrs",
-    "bevy/bevy_winit",
-    "bevy/filesystem_watcher",
-    "bevy/bevy_render",
+    "bevy/basis-universal",
     "bevy/bevy_core_pipeline",
-    "bevy/bevy_pbr",
+    "bevy/bevy_gilrs",
     "bevy/bevy_gltf",
+    "bevy/bevy_pbr",
+    "bevy/bevy_render",
+    "bevy/bevy_sprite",
     "bevy/bevy_text",
     "bevy/bevy_ui",
-    "bevy/subpixel_glyph_atlas",
-    "bevy/serialize",
-    "bevy/ktx2",
+    "bevy/bevy_winit",
     "bevy/dds",
-    "bevy/png",
+    "bevy/filesystem_watcher",
     "bevy/hdr",
-    "bevy/basis-universal",
+    "bevy/ktx2",
+    "bevy/png",
+    "bevy/serialize",
+    "bevy/subpixel_glyph_atlas",
     "bevy/zstd",
-    "bevy_kira_audio/ogg",
-    "bevy_kira_audio/serde"
 ]
 
 linux = [
-    "bevy/x11",
     "bevy/wayland",
+    "bevy/x11",
 ]
 
 development = [
@@ -39,8 +38,8 @@ development = [
 
 trace = [
     "bevy/trace",
-    "bevy/trace_tracy",
     "bevy/trace_chrome",
+    "bevy/trace_tracy",
     "bevy/wgpu_trace",
 ]
 
@@ -49,7 +48,7 @@ bevy_asset_loader = "0.10.0"
 # bevy_config_cam = "0.3.0"
 # bevy_egui = "0.14.0"
 # bevy_mod_picking = "0.6.1"
-bevy_tweening = "0.4.0"
+# bevy_tweening = "0.4.0"
 # big-brain = "0.11.0"
 # heron = "3.0.1"
 iyes_loopless = "0.5.1"
@@ -67,9 +66,10 @@ features = ["secure"]
 version = "0.7"
 default-features = false
 
-[dependencies.bevy_kira_audio]
-version = "0.9.0"
-default-features = false
+# [dependencies.bevy_kira_audio]
+# version = "0.9.0"
+# default-features = false
+# features = ["bevy_kira_audio/ogg", "bevy_kira_audio/serde"]
 
 [profile.dev]
 opt-level = 1
