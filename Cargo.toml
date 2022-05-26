@@ -7,7 +7,6 @@ license = "MIT OR Apache-2.0"
 [features]
 default = [
     "bevy/animation",
-    "bevy/basis-universal",
     "bevy/bevy_core_pipeline",
     "bevy/bevy_gilrs",
     "bevy/bevy_gltf",
@@ -17,19 +16,24 @@ default = [
     "bevy/bevy_text",
     "bevy/bevy_ui",
     "bevy/bevy_winit",
-    "bevy/dds",
     "bevy/filesystem_watcher",
     "bevy/hdr",
-    "bevy/ktx2",
     "bevy/png",
     "bevy/serialize",
     "bevy/subpixel_glyph_atlas",
-    "bevy/zstd",
 ]
 
 linux = [
     "bevy/wayland",
     "bevy/x11",
+]
+
+native = [
+    "bevy/basis-universal",
+    "bevy/dds",
+    "bevy/ktx2",
+    "bevy/zlib",
+    "bevy/zstd",
 ]
 
 development = [
