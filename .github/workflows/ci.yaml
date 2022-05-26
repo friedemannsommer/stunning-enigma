@@ -39,7 +39,7 @@ jobs:
         with:
           command: test
           args: --all-targets --features linux,native
-      - name: Run cargo test (linux)
+      - name: Run cargo test (windows, macos)
         uses: actions-rs/cargo@v1
         if: runner.os != 'linux'
         with:

@@ -9,14 +9,11 @@ default = [
     "bevy/animation",
     "bevy/bevy_core_pipeline",
     "bevy/bevy_gilrs",
-    "bevy/bevy_gltf",
-    "bevy/bevy_pbr",
     "bevy/bevy_render",
     "bevy/bevy_sprite",
     "bevy/bevy_text",
     "bevy/bevy_ui",
     "bevy/bevy_winit",
-    "bevy/filesystem_watcher",
     "bevy/hdr",
     "bevy/png",
     "bevy/serialize",
@@ -37,7 +34,8 @@ native = [
 ]
 
 development = [
-    "bevy/dynamic"
+    "bevy/dynamic",
+    "bevy/filesystem_watcher",
 ]
 
 trace = [

@@ -48,14 +48,11 @@ pub fn on_move_player(
     mut player_position: Query<&mut Transform, With<Player>>,
 ) {
     for movement in events.iter() {
-        for mut transform in player_position.iter_mut() {
-            if movement.direction.x != 0.0 {
-                transform.translation.x += movement.direction.x + 10.0 * time.delta_seconds();
-            }
+        let velocity = movement.direction.normalize() * 100.0 * time.delta_seconds();
 
-            if movement.direction.y != 0.0 {
-                transform.translation.y += movement.direction.y + 10.0 * time.delta_seconds();
-            }
+        for mut transform in player_position.iter_mut() {
+            transform.translation.x += velocity.x;
+            transform.translation.y += velocity.y;
         }
     }
 }
