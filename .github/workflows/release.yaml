@@ -70,6 +70,11 @@ jobs:
 
   release-linux:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
 
     steps:
       - uses: little-core-labs/get-git-tag@v3.0.2
@@ -80,7 +85,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: x86_64-unknown-linux-gnu
+          target: ${{ matrix.target }}
           override: true
 
       - name: Install dependencies
@@ -91,12 +96,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --target x86_64-unknown-linux-gnu --features linux,native
+          args: --release --target ${{ matrix.target }} --features linux,native
 
       - name: Prepare package
         run: |
           mkdir linux
-          cp target/x86_64-unknown-linux-gnu/release/${{ env.binary }} linux/
+          cp target/${{ matrix.target }}/release/${{ env.binary }} linux/
           cp -r assets linux/
       - name: Package as a zip
         uses: vimtor/action-zip@v1
@@ -109,7 +114,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
-          asset_name: ${{ env.binary }}-linux-${{ steps.get_version.outputs.tag }}.zip
+          asset_name: ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.zip
           tag: ${{ github.ref }}
           overwrite: true
 
