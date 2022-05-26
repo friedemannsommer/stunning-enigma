@@ -6,7 +6,6 @@ license = "MIT OR Apache-2.0"
 
 [features]
 default = [
-    "mimalloc/secure",
     "bevy/animation",
     "bevy/bevy_gilrs",
     "bevy/bevy_winit",
@@ -47,21 +46,22 @@ trace = [
 
 [dependencies]
 bevy_asset_loader = "0.10.0"
-bevy_config_cam = "0.3.0"
-bevy_egui = "0.14.0"
-bevy_mod_picking = "0.6.1"
+# bevy_config_cam = "0.3.0"
+# bevy_egui = "0.14.0"
+# bevy_mod_picking = "0.6.1"
 bevy_tweening = "0.4.0"
-big-brain = "0.11.0"
-heron = "3.0.1"
+# big-brain = "0.11.0"
+# heron = "3.0.1"
 iyes_loopless = "0.5.1"
 leafwing-input-manager = "0.3.0"
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "wasm64"))'.dependencies]
 console_error_panic_hook = "0.1.7"
 
-[dependencies.mimalloc]
+[target.'cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))'.dependencies.mimalloc]
 version = "0.1.29"
 default-features = false
+features = ["secure"]
 
 [dependencies.bevy]
 version = "0.7"
