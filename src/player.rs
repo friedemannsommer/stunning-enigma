@@ -49,8 +49,13 @@ pub fn on_move_player(
 ) {
     for movement in events.iter() {
         for mut transform in player_position.iter_mut() {
-            transform.translation.x += movement.direction.x + 10.0 * time.delta_seconds();
-            transform.translation.y += movement.direction.y + 10.0 * time.delta_seconds();
+            if movement.direction.x != 0.0 {
+                transform.translation.x += movement.direction.x + 10.0 * time.delta_seconds();
+            }
+
+            if movement.direction.y != 0.0 {
+                transform.translation.y += movement.direction.y + 10.0 * time.delta_seconds();
+            }
         }
     }
 }
