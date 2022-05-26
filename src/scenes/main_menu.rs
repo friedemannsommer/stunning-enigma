@@ -10,7 +10,8 @@ use bevy::ui::{
     AlignItems, AlignSelf, FlexDirection, Interaction, JustifyContent, Style, UiColor, Val,
 };
 
-use crate::{FontAssets, GameState, StateTransition};
+use crate::assets::FontAssets;
+use crate::{GameState, StateTransition};
 
 #[derive(Component)]
 pub struct MainMenu;
@@ -115,6 +116,6 @@ pub fn on_exit(mut ev: EventWriter<AppExit>) {
 
 pub fn on_start(mut ev: EventWriter<StateTransition>) {
     ev.send(StateTransition {
-        next_state: GameState::InGame,
+        next_state: GameState::Loading,
     });
 }

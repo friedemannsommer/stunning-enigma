@@ -6,8 +6,8 @@ use bevy::sprite::SpriteBundle;
 use leafwing_input_manager::prelude::ActionState;
 use leafwing_input_manager::InputManagerBundle;
 
-use crate::controls::PlayerAction;
-use crate::{ImageAssets, PlayerMovement};
+use crate::assets::SpriteAssets;
+use crate::controls::{PlayerAction, PlayerMovement};
 
 #[derive(Component)]
 pub struct Player;
@@ -24,7 +24,7 @@ pub struct PlayerBundle {
     sprite: SpriteBundle,
 }
 
-pub fn setup_player(mut commands: Commands, images: Res<ImageAssets>) {
+pub fn setup_player(mut commands: Commands, images: Res<SpriteAssets>) {
     commands
         .spawn_bundle(OrthographicCameraBundle::new_2d())
         .insert(PlayerCamera);
@@ -36,7 +36,7 @@ pub fn setup_player(mut commands: Commands, images: Res<ImageAssets>) {
             action_state: ActionState::default(),
         },
         sprite: SpriteBundle {
-            texture: images.player.clone(),
+            texture: images.ships[0].clone(),
             ..Default::default()
         },
     });
