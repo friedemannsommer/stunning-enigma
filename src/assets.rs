@@ -11,6 +11,6 @@ pub struct ImageAssets {
 
 #[derive(AssetCollection)]
 pub struct FontAssets {
-    #[asset(path = "kobajeon-font/kobajeon.otf")]
-    pub kobajeon: Handle<Font>,
+    #[asset(path = "kenney-fonts/Kenney Blocks.ttf")]
+    pub kenney_block: Handle<Font>,
 }

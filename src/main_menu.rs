@@ -23,8 +23,8 @@ pub struct ExitButton;
 
 pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
     let title_style = TextStyle {
-        font: fonts.kobajeon.clone(),
-        font_size: 24.0,
+        font: fonts.kenney_block.clone(),
+        font_size: 48.0,
         color: Color::WHITE,
     };
     let button_style = Style {
