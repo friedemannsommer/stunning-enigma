@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.1
+      - uses: little-core-labs/get-git-tag@v3.0.2
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
       - uses: actions-rs/toolchain@v1
@@ -62,7 +62,7 @@ jobs:
           overwrite: true
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: gh-pages
           folder: wasm
@@ -71,9 +71,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.1
+      - uses: little-core-labs/get-git-tag@v3.0.2
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
       - uses: actions-rs/toolchain@v1
@@ -113,9 +113,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.1
+      - uses: little-core-labs/get-git-tag@v3.0.2
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -150,9 +150,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.1
+      - uses: little-core-labs/get-git-tag@v3.0.2
         id: get_version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
