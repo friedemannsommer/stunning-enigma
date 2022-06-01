@@ -41,7 +41,7 @@ pub fn on_player_action(
         state_transition_event.send(StateTransition {
             next_state: GameState::MainMenu,
         })
-    }  else {
+    } else {
         let mut direction = Vec2::ZERO;
 
         for input_direction in PlayerAction::DIRECTIONS {
