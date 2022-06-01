@@ -19,7 +19,6 @@ pub enum PlayerAction {
     Right,
     // game actions
     Escape,
-    Reset,
 }
 
 #[derive(Debug)]
@@ -42,11 +41,7 @@ pub fn on_player_action(
         state_transition_event.send(StateTransition {
             next_state: GameState::MainMenu,
         })
-    } else if action_state.pressed(PlayerAction::Reset) {
-        state_transition_event.send(StateTransition {
-            next_state: GameState::InGame,
-        })
-    } else {
+    }  else {
         let mut direction = Vec2::ZERO;
 
         for input_direction in PlayerAction::DIRECTIONS {
@@ -86,7 +81,6 @@ impl PlayerAction {
         input_map.insert(Self::Right, KeyCode::D);
 
         input_map.insert(Self::Escape, KeyCode::Escape);
-        input_map.insert(Self::Reset, KeyCode::Delete);
 
         input_map
     }

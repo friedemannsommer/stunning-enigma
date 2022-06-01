@@ -1,4 +1,5 @@
 use bevy::core::Time;
+use bevy::math::Quat;
 use bevy::prelude::{
     Bundle, Commands, Component, EventReader, OrthographicCameraBundle, Query, Res, Transform, With,
 };
@@ -37,6 +38,7 @@ pub fn setup_player(mut commands: Commands, images: Res<SpriteAssets>) {
         },
         sprite: SpriteBundle {
             texture: images.ships[0].clone(),
+            transform: Transform::from_xyz(0.0, 0.0, 1.0),
             ..Default::default()
         },
     });
@@ -53,6 +55,7 @@ pub fn on_move_player(
         for mut transform in player_position.iter_mut() {
             transform.translation.x += velocity.x;
             transform.translation.y += velocity.y;
+            transform.rotation = Quat::from_rotation_z(velocity.x.atan2(-velocity.y));
         }
     }
 }

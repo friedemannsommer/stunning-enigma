@@ -19,6 +19,7 @@ use crate::controls::{
     on_player_action, on_state_transition, PlayerAction, PlayerMovement, StateTransition,
 };
 use crate::player::{on_move_player, setup_player, Player, PlayerCamera};
+use crate::scenes::in_game::{setup_in_game, Tile};
 use crate::scenes::loading::{setup_loading, Loading};
 use crate::scenes::main_menu::{
     button_interaction_visual, on_button_interaction, on_exit, on_start, setup_menu, ExitButton,
@@ -58,9 +59,11 @@ fn main() {
         .add_enter_system(GameState::Loading, load_game_assets)
         .add_enter_system(GameState::Loading, setup_loading)
         .add_enter_system(GameState::InGame, setup_player)
+        .add_enter_system(GameState::InGame, setup_in_game)
         .add_exit_system(GameState::MainMenu, remove_with::<MainMenu>)
         .add_exit_system(GameState::InGame, remove_with::<Player>)
         .add_exit_system(GameState::InGame, remove_with::<PlayerCamera>)
+        .add_exit_system(GameState::InGame, remove_with::<Tile>)
         .add_exit_system(GameState::Loading, remove_with::<Loading>)
         .add_exit_system(GameState::InGame, clear_events::<PlayerMovement>)
         .add_system(on_state_transition.run_on_event::<StateTransition>())
