@@ -68,21 +68,17 @@ impl PlayerAction {
     const DIRECTIONS: [Self; 4] = [Self::Up, Self::Down, Self::Left, Self::Right];
 
     pub fn default_input_map() -> InputMap<Self> {
-        let mut input_map = InputMap::default();
-
-        input_map.insert(Self::Up, KeyCode::Up);
-        input_map.insert(Self::Down, KeyCode::Down);
-        input_map.insert(Self::Left, KeyCode::Left);
-        input_map.insert(Self::Right, KeyCode::Right);
-
-        input_map.insert(Self::Up, KeyCode::W);
-        input_map.insert(Self::Down, KeyCode::S);
-        input_map.insert(Self::Left, KeyCode::A);
-        input_map.insert(Self::Right, KeyCode::D);
-
-        input_map.insert(Self::Escape, KeyCode::Escape);
-
-        input_map
+        InputMap::new([
+            (KeyCode::Up, Self::Up),
+            (KeyCode::Down, Self::Down),
+            (KeyCode::Left, Self::Left),
+            (KeyCode::Right, Self::Right),
+            (KeyCode::W, Self::Up),
+            (KeyCode::S, Self::Down),
+            (KeyCode::A, Self::Left),
+            (KeyCode::D, Self::Right),
+            (KeyCode::Escape, Self::Escape),
+        ])
     }
 
     fn direction(self) -> Option<Direction> {

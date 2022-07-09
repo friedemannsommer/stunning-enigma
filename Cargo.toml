@@ -54,7 +54,7 @@ trace = [
 # big-brain = "0.11.0"
 # heron = "3.0.1"
 iyes_loopless = "0.6.1"
-leafwing-input-manager = "0.3.0"
+leafwing-input-manager = "0.4.0"
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "wasm64"))'.dependencies]
 console_error_panic_hook = "0.1.7"
