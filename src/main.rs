@@ -2,6 +2,7 @@
     all(not(debug_assertions), target_family = "windows"),
     windows_subsystem = "windows"
 )]
+#![allow(clippy::forget_non_drop)]
 
 use bevy::app::App;
 use bevy::prelude::{Commands, UiCameraBundle};
