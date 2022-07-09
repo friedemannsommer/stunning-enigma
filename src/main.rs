@@ -19,7 +19,7 @@ use crate::assets::{
 use crate::controls::{
     on_player_action, on_state_transition, PlayerAction, PlayerMovement, StateTransition,
 };
-use crate::player::{on_move_player, setup_player, Player, PlayerCamera};
+use crate::player::{move_camera_to_player, on_move_player, setup_player, Player, PlayerCamera};
 use crate::scenes::in_game::{setup_in_game, Tile};
 use crate::scenes::loading::{setup_loading, Loading};
 use crate::scenes::main_menu::{
@@ -93,6 +93,7 @@ fn main() {
                 .run_in_state(GameState::InGame)
                 .with_system(on_player_action)
                 .with_system(on_move_player.run_on_event::<PlayerMovement>())
+                .with_system(move_camera_to_player)
                 .into(),
         )
         .add_startup_system(setup);

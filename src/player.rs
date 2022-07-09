@@ -1,7 +1,8 @@
 use bevy::core::Time;
 use bevy::math::Quat;
 use bevy::prelude::{
-    Bundle, Commands, Component, EventReader, OrthographicCameraBundle, Query, Res, Transform, With,
+    Bundle, Changed, Commands, Component, EventReader, OrthographicCameraBundle, Query, Res,
+    Transform, With, Without,
 };
 use bevy::sprite::SpriteBundle;
 use leafwing_input_manager::prelude::ActionState;
@@ -57,5 +58,18 @@ pub fn on_move_player(
             transform.translation.y += velocity.y;
             transform.rotation = Quat::from_rotation_z(velocity.x.atan2(-velocity.y));
         }
+    }
+}
+
+pub fn move_camera_to_player(
+    player_position: Query<&Transform, (With<Player>, Changed<Transform>)>,
+    mut camera_position: Query<&mut Transform, (With<PlayerCamera>, Without<Player>)>,
+) {
+    if !player_position.is_empty() {
+        let mut camera_transform = camera_position.single_mut();
+        let player_transform = player_position.single();
+
+        camera_transform.translation.x = player_transform.translation.x;
+        camera_transform.translation.y = player_transform.translation.y;
     }
 }
