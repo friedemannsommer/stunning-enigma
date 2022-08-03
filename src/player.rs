@@ -1,10 +1,10 @@
-use bevy::core::Time;
 use bevy::math::Quat;
 use bevy::prelude::{
-    Bundle, Changed, Commands, Component, EventReader, OrthographicCameraBundle, Query, Res,
-    Transform, With, Without,
+    Bundle, Camera2dBundle, Changed, Commands, Component, EventReader, Query, Res, Transform, With,
+    Without,
 };
 use bevy::sprite::SpriteBundle;
+use bevy::time::Time;
 use leafwing_input_manager::prelude::ActionState;
 use leafwing_input_manager::InputManagerBundle;
 
@@ -28,7 +28,7 @@ pub struct PlayerBundle {
 
 pub fn setup_player(mut commands: Commands, images: Res<SpriteAssets>) {
     commands
-        .spawn_bundle(OrthographicCameraBundle::new_2d())
+        .spawn_bundle(Camera2dBundle::default())
         .insert(PlayerCamera);
 
     commands.spawn_bundle(PlayerBundle {

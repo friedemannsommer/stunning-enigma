@@ -1,13 +1,13 @@
 use bevy::app::AppExit;
 use bevy::hierarchy::BuildChildren;
-use bevy::math::{Rect, Size};
 use bevy::prelude::{
-    Button, ButtonBundle, Changed, Color, Commands, Component, EventWriter, NodeBundle, Query, Res,
-    TextBundle, With,
+    Button, ButtonBundle, Camera2dBundle, Changed, Color, Commands, Component, EventWriter,
+    NodeBundle, Query, Res, TextBundle, With,
 };
 use bevy::text::{Text, TextStyle};
 use bevy::ui::{
-    AlignItems, AlignSelf, FlexDirection, Interaction, JustifyContent, Style, UiColor, Val,
+    AlignItems, AlignSelf, FlexDirection, Interaction, JustifyContent, Size, Style, UiColor,
+    UiRect, Val,
 };
 
 use crate::assets::FontAssets;
@@ -31,8 +31,8 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
     let button_style = Style {
         justify_content: JustifyContent::Center,
         align_items: AlignItems::Center,
-        padding: Rect::all(Val::Px(2.0)),
-        margin: Rect::all(Val::Px(4.0)),
+        padding: UiRect::all(Val::Px(2.0)),
+        margin: UiRect::all(Val::Px(4.0)),
         flex_grow: 1.0,
         ..Default::default()
     };
@@ -42,7 +42,7 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
             color: UiColor(Color::rgb(0.0, 0.0, 0.0)),
             style: Style {
                 size: Size::new(Val::Auto, Val::Auto),
-                margin: Rect::all(Val::Auto),
+                margin: UiRect::all(Val::Auto),
                 align_self: AlignSelf::Center,
                 flex_direction: FlexDirection::ColumnReverse,
                 justify_content: JustifyContent::Center,
@@ -59,7 +59,7 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
             .insert(StartButton)
             .with_children(|btn| {
                 btn.spawn_bundle(TextBundle {
-                    text: Text::with_section("Enter Game", title_style.clone(), Default::default()),
+                    text: Text::from_section("Enter Game", title_style.clone()),
                     ..Default::default()
                 });
             });
@@ -71,11 +71,15 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
             .insert(ExitButton)
             .with_children(|btn| {
                 btn.spawn_bundle(TextBundle {
-                    text: Text::with_section("Exit Game", title_style.clone(), Default::default()),
+                    text: Text::from_section("Exit Game", title_style.clone()),
                     ..Default::default()
                 });
             });
         });
+
+    commands
+        .spawn_bundle(Camera2dBundle::default())
+        .insert(MainMenu);
 }
 
 #[allow(clippy::type_complexity)]

@@ -21,7 +21,6 @@ pub enum PlayerAction {
     Escape,
 }
 
-#[derive(Debug)]
 pub struct PlayerMovement {
     pub direction: Vec2,
 }

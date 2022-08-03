@@ -5,7 +5,6 @@
 #![allow(clippy::forget_non_drop)]
 
 use bevy::app::App;
-use bevy::prelude::{Commands, UiCameraBundle};
 use bevy::DefaultPlugins;
 use iyes_loopless::condition::{ConditionSet, IntoConditionalSystem};
 use iyes_loopless::prelude::AppLooplessStateExt;
@@ -95,13 +94,8 @@ fn main() {
                 .with_system(on_move_player.run_on_event::<PlayerMovement>())
                 .with_system(move_camera_to_player)
                 .into(),
-        )
-        .add_startup_system(setup);
+        );
 
     // launch!
     app.run();
-}
-
-fn setup(mut commands: Commands) {
-    commands.spawn_bundle(UiCameraBundle::default());
 }

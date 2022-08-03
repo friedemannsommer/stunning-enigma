@@ -1,8 +1,7 @@
 use bevy::hierarchy::BuildChildren;
-use bevy::math::{Rect, Size};
-use bevy::prelude::{Color, Commands, Component, NodeBundle, Res, TextBundle};
+use bevy::prelude::{Camera2dBundle, Color, Commands, Component, NodeBundle, Res, TextBundle};
 use bevy::text::{Text, TextStyle};
-use bevy::ui::{AlignSelf, FlexDirection, JustifyContent, Style, UiColor, Val};
+use bevy::ui::{AlignSelf, FlexDirection, JustifyContent, Size, Style, UiColor, UiRect, Val};
 
 use crate::assets::FontAssets;
 
@@ -21,8 +20,8 @@ pub fn setup_loading(mut commands: Commands, fonts: Res<FontAssets>) {
             color: UiColor(Color::BLACK),
             style: Style {
                 size: Size::new(Val::Auto, Val::Auto),
-                margin: Rect::all(Val::Auto),
-                padding: Rect::all(Val::Px(24.0)),
+                margin: UiRect::all(Val::Auto),
+                padding: UiRect::all(Val::Px(24.0)),
                 align_self: AlignSelf::Center,
                 flex_direction: FlexDirection::Row,
                 justify_content: JustifyContent::Center,
@@ -33,8 +32,12 @@ pub fn setup_loading(mut commands: Commands, fonts: Res<FontAssets>) {
         .insert(Loading)
         .with_children(|menu| {
             menu.spawn_bundle(TextBundle {
-                text: Text::with_section("Loading...", title_style.clone(), Default::default()),
+                text: Text::from_section("Loading...", title_style.clone()),
                 ..Default::default()
             });
         });
+
+    commands
+        .spawn_bundle(Camera2dBundle::default())
+        .insert(Loading);
 }
