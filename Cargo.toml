@@ -53,8 +53,8 @@ trace = [
 # bevy_tweening = "0.4.0"
 # big-brain = "0.11.0"
 # heron = "3.0.1"
-iyes_loopless = "0.7.0"
-leafwing-input-manager = "0.5.1"
+iyes_loopless = "0.7.1"
+leafwing-input-manager = "0.5.2"
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "wasm64"))'.dependencies]
 console_error_panic_hook = "0.1.7"
@@ -65,7 +65,7 @@ default-features = false
 features = ["secure"]
 
 [dependencies.bevy]
-version = "0.8.0"
+version = "0.8.1"
 default-features = false
 
 # [dependencies.bevy_kira_audio]
