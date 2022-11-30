@@ -61,7 +61,7 @@ leafwing-input-manager = "0.5.2"
 console_error_panic_hook = "0.1.7"
 
 [target.'cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))'.dependencies.mimalloc]
-version = "0.1.30"
+version = "0.1.32"
 default-features = false
 features = ["secure"]
 
