@@ -129,7 +129,7 @@ jobs:
           cp -r assets windows/
 
       - name: Package as a zip
-        run: Compress-Archive -LiteralPath windows -DestinationPath ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
+        run: Compress-Archive -Path windows/* -DestinationPath ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
