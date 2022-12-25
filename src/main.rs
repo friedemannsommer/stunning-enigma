@@ -48,13 +48,18 @@ mod utils;
 static GLOBAL: MiMalloc = MiMalloc;
 
 fn main() {
+    #[cfg(target_arch = "wasm32")]
+    console_error_panic_hook::set_once();
+
     let mut app = App::new();
 
     // plugins
     app.add_plugins(DefaultPlugins.set(bevy::window::WindowPlugin {
         window: bevy::window::WindowDescriptor {
-            title: String::from("Stunning Enigma"),
+            fit_canvas_to_parent: true,
             present_mode: bevy::window::PresentMode::AutoNoVsync,
+            resizable: true,
+            title: String::from("Stunning Enigma"),
             ..Default::default()
         },
         ..Default::default()
