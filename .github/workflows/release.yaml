@@ -68,7 +68,8 @@ jobs:
       matrix:
         target:
           - x86_64-unknown-linux-gnu
-          - aarch64-unknown-linux-gnu
+          # wayland cross-compilation for ARM64 requires further research
+          # - aarch64-unknown-linux-gnu
 
     steps:
       - uses: actions/checkout@v3
