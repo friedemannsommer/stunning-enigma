@@ -32,20 +32,20 @@ pub fn load_game_assets(mut commands: Commands, asset_server: Res<AssetServer>) 
     let mut fires = Vec::<Handle<Image>>::with_capacity(2);
 
     for i in 1..97 {
-        tiles.push(asset_server.load(&format!("kenney-pirate-pack/Tiles/tile_{:0>2}.png", i)));
+        tiles.push(asset_server.load(format!("kenney-pirate-pack/Tiles/tile_{:0>2}.png", i)));
     }
 
     for i in 1..25 {
-        ships.push(asset_server.load(&format!("kenney-pirate-pack/Ships/ship ({}).png", i)));
+        ships.push(asset_server.load(format!("kenney-pirate-pack/Ships/ship ({}).png", i)));
     }
 
     for i in 1..4 {
         explosions
-            .push(asset_server.load(&format!("kenney-pirate-pack/Effects/explosion{}.png", i)));
+            .push(asset_server.load(format!("kenney-pirate-pack/Effects/explosion{}.png", i)));
     }
 
     for i in 1..3 {
-        fires.push(asset_server.load(&format!("kenney-pirate-pack/Effects/fire{}.png", i)));
+        fires.push(asset_server.load(format!("kenney-pirate-pack/Effects/fire{}.png", i)));
     }
 
     commands.insert_resource(SpriteAssets {
