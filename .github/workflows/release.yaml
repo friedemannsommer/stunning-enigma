@@ -42,10 +42,7 @@ jobs:
           file: wasm/*.wasm
 
       - name: Package as a zip
-        uses: vimtor/action-zip@v1
-        with:
-          files: wasm
-          dest: ${{ env.binary }}-wasm-${{ github.ref_name }}.zip
+        run: zip -r ${{ env.binary }}-wasm-${{ github.ref_name }}.zip wasm
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -93,10 +90,7 @@ jobs:
           cp target/${{ matrix.target }}/release/${{ env.binary }} linux/
           cp -r assets linux/
       - name: Package as a zip
-        uses: vimtor/action-zip@v1
-        with:
-          files: linux
-          dest: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
+        run: zip -r ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip linux
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -132,10 +126,7 @@ jobs:
           cp -r assets windows/
 
       - name: Package as a zip
-        uses: vimtor/action-zip@v1
-        with:
-          files: windows
-          dest: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
+        run: zip -r ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip windows
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
