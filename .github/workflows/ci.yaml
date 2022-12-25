@@ -25,26 +25,18 @@ jobs:
         if: runner.os == 'linux'
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
         if: runner.os == 'linux'
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
-          profile: minimal
           toolchain: stable
-          override: true
       - name: Install Dependencies
         if: runner.os == 'linux'
         run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libwayland-dev libxkbcommon-dev
       - name: Run cargo test (linux)
-        uses: actions-rs/cargo@v1
         if: runner.os == 'linux'
-        with:
-          command: test
-          args: --all-targets --features linux,native
+        run: cargo test --all-targets --features linux,native
       - name: Run cargo test (windows, macos)
-        uses: actions-rs/cargo@v1
         if: runner.os != 'linux'
-        with:
-          command: test
-          args: --all-targets --features native
+        run: cargo test --all-targets --features native
 
   clippy_check:
     name: Clippy
@@ -54,35 +46,23 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
-          profile: minimal
           components: clippy
-          override: true
+          toolchain: stable
       - name: Install Dependencies
         run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libwayland-dev libxkbcommon-dev
       - name: Run clippy
-        uses: actions-rs/clippy-check@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-targets --features linux,native -- -D warnings
+        run: cargo clippy --all-targets --features linux,native -- -D warnings
 
   format:
     name: Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
-          profile: minimal
           components: rustfmt
-          override: true
+          toolchain: stable
       - name: Run cargo fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+        run: cargo fmt --all -- --check
