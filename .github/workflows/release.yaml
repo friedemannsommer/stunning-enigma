@@ -36,13 +36,14 @@ jobs:
           wasm-bindgen --no-typescript --out-name ${{ env.binary }} --out-dir wasm --target web target/wasm32-unknown-unknown/wasm-release/${{ env.binary }}.wasm
           cp -r assets wasm/
 
-      - name: optimize Wasm
+      - name: Optimize WASM
         uses: NiklasEi/wasm-opt-action@v2
         with:
           file: wasm/*.wasm
 
       - name: Package as a zip
-        run: zip -r ${{ env.binary }}-wasm-${{ github.ref_name }}.zip wasm
+        run: zip -r ../${{ env.binary }}-wasm-${{ github.ref_name }}.zip .
+        working-directory: wasm
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -89,8 +90,10 @@ jobs:
           mkdir linux
           cp target/${{ matrix.target }}/release/${{ env.binary }} linux/
           cp -r assets linux/
+
       - name: Package as a zip
-        run: zip -r ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip linux
+        run: zip -r ../${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip .
+        working-directory: linux
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -126,7 +129,7 @@ jobs:
           cp -r assets windows/
 
       - name: Package as a zip
-        run: zip -r ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip windows
+        run: Compress-Archive -LiteralPath windows -DestinationPath ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
