@@ -54,7 +54,7 @@ trace = [
 # bevy_tweening = "0.4.0"
 # big-brain = "0.11.0"
 # heron = "3.0.1"
-iyes_loopless = "0.7.1"
+iyes_loopless = "0.9.1"
 leafwing-input-manager = "0.7.1"
 
 [target.'cfg(any(target_arch = "wasm32", target_arch = "wasm64"))'.dependencies]
@@ -66,7 +66,7 @@ default-features = false
 features = ["secure"]
 
 [dependencies.bevy]
-version = "0.8.1"
+version = "0.9.1"
 default-features = false
 
 # [dependencies.bevy_kira_audio]
@@ -83,3 +83,8 @@ opt-level = 3
 [profile.release]
 lto = "thin"
 codegen-units = 1
+
+[profile.wasm-release]
+inherits = "release"
+opt-level = "z"
+lto = "fat"

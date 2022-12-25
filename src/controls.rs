@@ -1,16 +1,15 @@
-use bevy::math::Vec2;
-use bevy::prelude::{Commands, EventReader, KeyCode};
-use bevy::prelude::{EventWriter, Query, With};
+use bevy::{
+    math::Vec2,
+    prelude::{Commands, EventReader, EventWriter, KeyCode, Query, With},
+};
 use iyes_loopless::state::NextState;
-use leafwing_input_manager::action_state::ActionState;
-use leafwing_input_manager::input_map::InputMap;
-use leafwing_input_manager::orientation::Direction;
-use leafwing_input_manager::Actionlike;
+use leafwing_input_manager::{
+    action_state::ActionState, input_map::InputMap, orientation::Direction, Actionlike,
+};
 
-use crate::player::Player;
-use crate::GameState;
+use crate::{player::Player, GameState};
 
-#[derive(Actionlike, PartialEq, Eq, Clone, Copy, Debug)]
+#[derive(Actionlike, PartialEq, Eq, Clone, Copy, Hash, Debug)]
 pub enum PlayerAction {
     // movement
     Up,

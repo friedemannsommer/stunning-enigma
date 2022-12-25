@@ -1,17 +1,18 @@
-use bevy::app::AppExit;
-use bevy::hierarchy::BuildChildren;
-use bevy::prelude::{
-    Button, ButtonBundle, Camera2dBundle, Changed, Color, Commands, Component, EventWriter,
-    NodeBundle, Query, Res, TextBundle, With,
-};
-use bevy::text::{Text, TextStyle};
-use bevy::ui::{
-    AlignItems, AlignSelf, FlexDirection, Interaction, JustifyContent, Size, Style, UiColor,
-    UiRect, Val,
+use bevy::{
+    app::AppExit,
+    hierarchy::BuildChildren,
+    prelude::{
+        Button, ButtonBundle, Camera2dBundle, Changed, Color, Commands, Component, EventWriter,
+        NodeBundle, Query, Res, TextBundle, With,
+    },
+    text::{Text, TextStyle},
+    ui::{
+        AlignItems, AlignSelf, BackgroundColor, FlexDirection, Interaction, JustifyContent, Size,
+        Style, UiRect, Val,
+    },
 };
 
-use crate::assets::FontAssets;
-use crate::{GameState, StateTransition};
+use crate::{assets::FontAssets, GameState, StateTransition};
 
 #[derive(Component)]
 pub struct MainMenu;
@@ -38,8 +39,8 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
     };
 
     commands
-        .spawn_bundle(NodeBundle {
-            color: UiColor(Color::rgb(0.0, 0.0, 0.0)),
+        .spawn(NodeBundle {
+            background_color: BackgroundColor(Color::BLACK),
             style: Style {
                 size: Size::new(Val::Auto, Val::Auto),
                 margin: UiRect::all(Val::Auto),
@@ -52,50 +53,48 @@ pub fn setup_menu(mut commands: Commands, fonts: Res<FontAssets>) {
         })
         .insert(MainMenu)
         .with_children(|menu| {
-            menu.spawn_bundle(ButtonBundle {
-                style: button_style.clone(),
-                ..Default::default()
-            })
-            .insert(StartButton)
-            .with_children(|btn| {
-                btn.spawn_bundle(TextBundle {
-                    text: Text::from_section("Enter Game", title_style.clone()),
-                    ..Default::default()
-                });
-            });
-
-            menu.spawn_bundle(ButtonBundle {
+            menu.spawn(ButtonBundle {
                 style: button_style.clone(),
                 ..Default::default()
             })
             .insert(ExitButton)
             .with_children(|btn| {
-                btn.spawn_bundle(TextBundle {
+                btn.spawn(TextBundle {
                     text: Text::from_section("Exit Game", title_style.clone()),
+                    ..Default::default()
+                });
+            });
+
+            menu.spawn(ButtonBundle {
+                style: button_style.clone(),
+                ..Default::default()
+            })
+            .insert(StartButton)
+            .with_children(|btn| {
+                btn.spawn(TextBundle {
+                    text: Text::from_section("Enter Game", title_style.clone()),
                     ..Default::default()
                 });
             });
         });
 
-    commands
-        .spawn_bundle(Camera2dBundle::default())
-        .insert(MainMenu);
+    commands.spawn(Camera2dBundle::default()).insert(MainMenu);
 }
 
 #[allow(clippy::type_complexity)]
 pub fn button_interaction_visual(
-    mut query: Query<(&Interaction, &mut UiColor), (Changed<Interaction>, With<Button>)>,
+    mut query: Query<(&Interaction, &mut BackgroundColor), (Changed<Interaction>, With<Button>)>,
 ) {
     for (interaction, mut color) in query.iter_mut() {
         match interaction {
             Interaction::Clicked => {
-                *color = UiColor(Color::rgb(0.5, 0.5, 0.5));
+                *color = BackgroundColor(Color::rgb(0.5, 0.5, 0.5));
             }
             Interaction::Hovered => {
-                *color = UiColor(Color::rgb(0.25, 0.25, 0.25));
+                *color = BackgroundColor(Color::rgb(0.25, 0.25, 0.25));
             }
             Interaction::None => {
-                *color = UiColor(Color::BLACK);
+                *color = BackgroundColor(Color::BLACK);
             }
         }
     }

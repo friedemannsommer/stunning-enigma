@@ -2,31 +2,39 @@
     all(not(debug_assertions), target_family = "windows"),
     windows_subsystem = "windows"
 )]
-#![allow(clippy::forget_non_drop)]
 
-use bevy::app::App;
-use bevy::DefaultPlugins;
-use iyes_loopless::condition::{ConditionSet, IntoConditionalSystem};
-use iyes_loopless::prelude::AppLooplessStateExt;
+use bevy::{
+    app::{App, PluginGroup},
+    diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
+    DefaultPlugins,
+};
+use iyes_loopless::{
+    condition::{ConditionSet, IntoConditionalSystem},
+    prelude::AppLooplessStateExt,
+};
 use leafwing_input_manager::plugin::InputManagerPlugin;
 #[cfg(not(any(target_arch = "wasm32", target_arch = "wasm64")))]
 use mimalloc::MiMalloc;
 
-use crate::assets::{
-    game_asset_load_transition, initial_load_transition, load_game_assets, load_initial_assets,
+use crate::{
+    assets::{
+        game_asset_load_transition, initial_load_transition, load_game_assets, load_initial_assets,
+    },
+    controls::{
+        on_player_action, on_state_transition, PlayerAction, PlayerMovement, StateTransition,
+    },
+    player::{move_camera_to_player, on_move_player, setup_player, Player, PlayerCamera},
+    scenes::{
+        in_game::{setup_in_game, Tile},
+        loading::{setup_loading, Loading},
+        main_menu::{
+            button_interaction_visual, on_button_interaction, on_exit, on_start, setup_menu,
+            ExitButton, MainMenu, StartButton,
+        },
+    },
+    state::GameState,
+    utils::{clear_events, remove_with},
 };
-use crate::controls::{
-    on_player_action, on_state_transition, PlayerAction, PlayerMovement, StateTransition,
-};
-use crate::player::{move_camera_to_player, on_move_player, setup_player, Player, PlayerCamera};
-use crate::scenes::in_game::{setup_in_game, Tile};
-use crate::scenes::loading::{setup_loading, Loading};
-use crate::scenes::main_menu::{
-    button_interaction_visual, on_button_interaction, on_exit, on_start, setup_menu, ExitButton,
-    MainMenu, StartButton,
-};
-use crate::state::GameState;
-use crate::utils::{clear_events, remove_with};
 
 mod assets;
 mod controls;
@@ -43,8 +51,17 @@ fn main() {
     let mut app = App::new();
 
     // plugins
-    app.add_plugins(DefaultPlugins)
-        .add_plugin(InputManagerPlugin::<PlayerAction>::default());
+    app.add_plugins(DefaultPlugins.set(bevy::window::WindowPlugin {
+        window: bevy::window::WindowDescriptor {
+            title: String::from("Stunning Enigma"),
+            present_mode: bevy::window::PresentMode::AutoNoVsync,
+            ..Default::default()
+        },
+        ..Default::default()
+    }))
+    .add_plugin(InputManagerPlugin::<PlayerAction>::default())
+    .add_plugin(FrameTimeDiagnosticsPlugin::default())
+    .add_plugin(LogDiagnosticsPlugin::default());
 
     // events
     app.add_event::<StateTransition>()

@@ -1,9 +1,12 @@
-use bevy::asset::{AssetServer, Handle, LoadState};
-use bevy::prelude::{Commands, EventWriter, Image, Res};
-use bevy::text::Font;
+use bevy::{
+    asset::{AssetServer, Handle, LoadState},
+    prelude::{Commands, EventWriter, Image, Res, Resource},
+    text::Font,
+};
 
 use crate::{GameState, StateTransition};
 
+#[derive(Resource)]
 pub struct SpriteAssets {
     pub explosions: Vec<Handle<Image>>,
     pub fires: Vec<Handle<Image>>,
@@ -11,6 +14,7 @@ pub struct SpriteAssets {
     pub tiles: Vec<Handle<Image>>,
 }
 
+#[derive(Resource)]
 pub struct FontAssets {
     pub kenney_block: Handle<Font>,
 }
@@ -69,13 +73,13 @@ pub fn game_asset_load_transition(
     sprites: Res<SpriteAssets>,
     asset_server: Res<AssetServer>,
 ) {
-    if asset_server.get_group_load_state(sprites.explosions.iter().map(|h| h.id))
+    if asset_server.get_group_load_state(sprites.explosions.iter().map(|a| a.id()))
         == LoadState::Loaded
-        && asset_server.get_group_load_state(sprites.fires.iter().map(|h| h.id))
+        && asset_server.get_group_load_state(sprites.fires.iter().map(|a| a.id()))
             == LoadState::Loaded
-        && asset_server.get_group_load_state(sprites.ships.iter().map(|h| h.id))
+        && asset_server.get_group_load_state(sprites.ships.iter().map(|a| a.id()))
             == LoadState::Loaded
-        && asset_server.get_group_load_state(sprites.tiles.iter().map(|h| h.id))
+        && asset_server.get_group_load_state(sprites.tiles.iter().map(|a| a.id()))
             == LoadState::Loaded
     {
         state_event.send(StateTransition {

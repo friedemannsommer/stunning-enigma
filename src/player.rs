@@ -1,15 +1,18 @@
-use bevy::math::Quat;
-use bevy::prelude::{
-    Bundle, Camera2dBundle, Changed, Commands, Component, EventReader, Query, Res, Transform, With,
-    Without,
+use bevy::{
+    math::Quat,
+    prelude::{
+        Bundle, Camera2dBundle, Changed, Commands, Component, EventReader, Query, Res, Transform,
+        With, Without,
+    },
+    sprite::SpriteBundle,
+    time::Time,
 };
-use bevy::sprite::SpriteBundle;
-use bevy::time::Time;
-use leafwing_input_manager::prelude::ActionState;
-use leafwing_input_manager::InputManagerBundle;
+use leafwing_input_manager::{prelude::ActionState, InputManagerBundle};
 
-use crate::assets::SpriteAssets;
-use crate::controls::{PlayerAction, PlayerMovement};
+use crate::{
+    assets::SpriteAssets,
+    controls::{PlayerAction, PlayerMovement},
+};
 
 #[derive(Component)]
 pub struct Player;
@@ -28,10 +31,10 @@ pub struct PlayerBundle {
 
 pub fn setup_player(mut commands: Commands, images: Res<SpriteAssets>) {
     commands
-        .spawn_bundle(Camera2dBundle::default())
+        .spawn(Camera2dBundle::default())
         .insert(PlayerCamera);
 
-    commands.spawn_bundle(PlayerBundle {
+    commands.spawn(PlayerBundle {
         player: Player,
         player_actions: InputManagerBundle {
             input_map: PlayerAction::default_input_map(),

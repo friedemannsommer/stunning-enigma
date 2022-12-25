@@ -1,6 +1,8 @@
-use bevy::ecs::event::Events;
-use bevy::hierarchy::DespawnRecursiveExt;
-use bevy::prelude::{Commands, Component, Entity, Query, ResMut, With};
+use bevy::{
+    ecs::event::Events,
+    hierarchy::DespawnRecursiveExt,
+    prelude::{Commands, Component, Entity, Query, ResMut, With},
+};
 
 pub fn remove_with<T: Component>(mut commands: Commands, q: Query<Entity, With<T>>) {
     for e in q.iter() {

@@ -1,5 +1,7 @@
-use bevy::prelude::{Commands, Component, Res, Transform};
-use bevy::sprite::SpriteBundle;
+use bevy::{
+    prelude::{Commands, Component, Res, Transform},
+    sprite::SpriteBundle,
+};
 
 use crate::assets::SpriteAssets;
 
@@ -22,7 +24,7 @@ const TILE_SIZE: u32 = 64;
 pub fn setup_in_game(mut commands: Commands, images: Res<SpriteAssets>) {
     for tile in generate_world(WIDTH, HEIGHT) {
         commands
-            .spawn_bundle(SpriteBundle {
+            .spawn(SpriteBundle {
                 texture: images.tiles[tile.variant.clone() as usize].clone(),
                 transform: Transform::from_xyz(tile.x, tile.y, 0.0),
                 ..Default::default()
