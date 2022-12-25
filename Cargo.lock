@@ -2378,14 +2378,14 @@ checksum = "6c8af84674fe1f223a982c933a0ee1086ac4d4052aa0fb8060c12c6ad838e754"
 
 [[package]]
 name = "iyes_loopless"
-version = "0.7.1"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fec251a82c60be9e282aec12056fa153666d5730b21d124655d7c22114d342c8"
+checksum = "c47fd2cbdb1d7f295c25e6bfccfd78a84b6eef3055bc9f01b34ae861721b01ee"
 dependencies = [
- "bevy_app 0.8.1",
- "bevy_ecs 0.8.1",
- "bevy_time 0.8.1",
- "bevy_utils 0.8.1",
+ "bevy_app 0.9.1",
+ "bevy_ecs 0.9.1",
+ "bevy_time 0.9.1",
+ "bevy_utils 0.9.1",
 ]
 
 [[package]]
