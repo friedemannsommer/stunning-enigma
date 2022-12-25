@@ -31,7 +31,7 @@ jobs:
           cargo install wasm-bindgen-cli
 
       - name: Build
-        run: cargo build --release --target wasm32-unknown-unknown --profile wasm-release
+        run: cargo build --target wasm32-unknown-unknown --profile wasm-release
 
       - name: Prepare package
         run: |
