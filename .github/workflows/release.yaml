@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.2
-        id: get_version
       - uses: actions/checkout@v3
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
@@ -47,7 +45,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: wasm
-          dest: ${{ env.binary }}-wasm-${{ steps.get_version.outputs.tag }}.zip
+          dest: ${{ env.binary }}-wasm-${{ github.ref_name }}.zip
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -55,7 +53,7 @@ jobs:
           append_body: true
           draft: true
           fail_on_unmatched_files: true
-          files: ${{ env.binary }}-wasm-${{ steps.get_version.outputs.tag }}.zip
+          files: ${{ env.binary }}-wasm-${{ github.ref_name }}.zip
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.4.1
@@ -72,8 +70,6 @@ jobs:
           - x86_64-unknown-linux-gnu
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.2
-        id: get_version
       - uses: actions/checkout@v3
       - uses: rui314/setup-mold@v1
       - run: sudo ln -sf /usr/local/bin/mold /usr/bin/mold
@@ -98,7 +94,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: linux
-          dest: ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.zip
+          dest: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -106,7 +102,7 @@ jobs:
           append_body: true
           draft: true
           fail_on_unmatched_files: true
-          files: ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.zip
+          files: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
 
   release-windows:
     runs-on: windows-latest
@@ -117,8 +113,6 @@ jobs:
           - x86_64-pc-windows-msvc
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.2
-        id: get_version
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@master
         with:
@@ -138,7 +132,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: windows
-          dest: ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.zip
+          dest: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -146,7 +140,7 @@ jobs:
           append_body: true
           draft: true
           fail_on_unmatched_files: true
-          files: ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.zip
+          files: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.zip
 
   release-macos:
     runs-on: macos-latest
@@ -158,8 +152,6 @@ jobs:
           - aarch64-apple-darwin
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.2
-        id: get_version
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@master
         with:
@@ -179,7 +171,7 @@ jobs:
           mkdir -p ${{ env.binary }}.app/Contents/MacOS
           cp target/${{ matrix.target }}/release/${{ env.binary }} ${{ env.binary }}.app/Contents/MacOS/
           cp -r assets ${{ env.binary }}.app/Contents/MacOS/
-          hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.dmg
+          hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.dmg
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
@@ -187,4 +179,4 @@ jobs:
           append_body: true
           draft: true
           fail_on_unmatched_files: true
-          files: ${{ env.binary }}-${{ matrix.target }}-${{ steps.get_version.outputs.tag }}.dmg
+          files: ${{ env.binary }}-${{ matrix.target }}-${{ github.ref_name }}.dmg
